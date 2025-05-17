@@ -39,8 +39,9 @@ TCP/IP
 ```plaintext
 Unix
 ```
+---
 
-## Enumerating SMB
+# Enumerating SMB
 
 Gathering information on usernames, passwords, shares, etc.
 #### Tools
@@ -100,8 +101,9 @@ POLOSMB
 ```plaintext
 profiles
 ```
+---
 
-## Exploiting SMB
+# Exploiting SMB
 
 Common vulnerabilities include:
 - **CVE-2017-7494** (Remote Code Execution)
