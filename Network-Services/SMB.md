@@ -134,8 +134,6 @@ smbclient //10.10.10.2/secret -U suit -p 445
 | `mget <file>` | Download file                   |
 | `more <file>` | View file contents (like `cat`) |
 
-Here's your requested format:
-
 #### Solutions:
 
 1. What would be the correct syntax to access an SMB share called "secret" as user "suit" on a machine with the IP 10.10.10.2 on the default port?
