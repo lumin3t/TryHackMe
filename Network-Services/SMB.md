@@ -11,7 +11,9 @@ Port: 445, 139, 137, 138
   - **NetBEUI**
   - **IPX/SPX**
 
-![[Pasted image 20250504234250.png]]
+![SMB](https://github.com/user-attachments/assets/a0cf4470-ece6-4b9c-8392-eea1c021ccc9)
+
+
 #### Samba
 - Provides SMB support for Unix systems.
 - Compatible since Windows 95.
@@ -179,4 +181,3 @@ ssh cactus@<target_ip> -i download_id_rsa
 THM{smb_is_fin_eh?}
 ```
 
----
