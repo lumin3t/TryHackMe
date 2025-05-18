@@ -4,13 +4,16 @@
   ```bash
   nmap -sT <target>
   ```
-![[WhatsApp Image 2025-04-18 at 12.28.48_93d0df3d.jpg]]
+![wireshark](https://github.com/user-attachments/assets/a801621e-b515-49d0-8283-3129bd8fe078)
+
 - **Behavior**:  
   - Completes the full TCP 3-way handshake (`SYN → SYN/ACK → ACK`).  
-![[WhatsApp Image 2025-04-18 at 12.28.59_4e3f76ff.jpg]]
+![syn syn/ack ack](https://github.com/user-attachments/assets/f9b67e67-cf40-45d2-937d-d3e4028d9e54)
+
   - **Open Port**: Responds with `SYN/ACK`.  
   - **Closed Port**: Responds with `RST`.  
-  ![[WhatsApp Image 2025-04-18 at 12.29.40_d01bc8a8.jpg]]
+  ![rst](https://github.com/user-attachments/assets/292bb357-fac7-47f9-a295-b5169b2b5ef7)
+
   - **Filtered Port**: No response (firewall drops packets).  
 
 #### 2. TCP SYN (Stealth) Scan (`-sS`)
