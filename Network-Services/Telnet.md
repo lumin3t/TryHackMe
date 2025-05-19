@@ -31,7 +31,9 @@ telnet 10.10.10.3 23
 ```plaintext
 encryption
 ```
-## Enumerating Telnet  
+---
+
+# Enumerating Telnet  
 
 #### Port Scanning  
 ```bash 
@@ -86,7 +88,9 @@ a backdoor
 ```plaintext
 Skidy
 ```
-## Exploiting Telnet  
+---
+
+# Exploiting Telnet  
 
 #### Basic Access  
 ```bash 
@@ -135,7 +139,8 @@ nc -lvnp 4444  # Attacker listens for connection
 ```  
 
 **Successful Connection:**  
-![[Pasted image 20250513003824.png]]  
+![successful connection](https://github.com/user-attachments/assets/ae9bee57-01d1-41c7-8dcc-20b75c701d98)
+
 #### Solutions:
 
 1. What welcome message do we receive?
