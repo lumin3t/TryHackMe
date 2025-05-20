@@ -89,11 +89,11 @@ This exploit requires:
 - `RPORT` → Target port
     
 
-![[Pasted image 20250519130213.png]]
+![options](https://github.com/user-attachments/assets/6b0cb8cf-f712-4a49-b0cf-ccbe79e2d8df)
 
 Some **post-exploitation modules** only require a session ID.
 
-![[Pasted image 20250519130232.png]]
+![sessions](https://github.com/user-attachments/assets/edd6fdfe-9051-4831-8943-a368524ebfac)
 
 #### Other `show` commands:
 
@@ -117,7 +117,7 @@ msf6 > search type:auxiliary telnet
 
 #### Module ranking is shown like below:
 
-![[Pasted image 20250519193503.png]]
+![ranking](https://github.com/user-attachments/assets/75eebec2-405b-4474-92e3-bc8dcad69b1f)
 
 ---
 
