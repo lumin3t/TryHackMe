@@ -51,7 +51,8 @@ IP `40.80.148.42` identified as primary attacker source through HTTP traffic ana
 
 **Vulnerability Identification:**  
 ShellShock exploit attempt (CVE-2014-6271) detected  
-<img width="632" height="398" alt="image" src="https://github.com/user-attachments/assets/1e25725a-297b-4486-8a81-bc1e4ac9c531" />
+<img width="1262" height="210" alt="image" src="https://github.com/user-attachments/assets/bcb02525-bb6a-4f6b-975b-7bcf25640699" />
+
 
 
 #### CMS Identification
