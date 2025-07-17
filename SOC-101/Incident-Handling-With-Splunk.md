@@ -2,13 +2,14 @@
 
 ### Executive Summary
 Wayne Enterprises experienced a cyberattack resulting in the defacement of its public-facing website (imreallynotbatman.com). The attackers left their trademark and a defacement message. This report details the investigation using Splunk analysis across multiple log sources, following the Cyber Kill Chain framework to reconstruct the attack timeline and identify IOCs.
-
+obsidian://open?vault=Obsidian%20Vault&file=CY%2FImages%2FPasted%20image%2020250618202509.png
 ### Incident Overview
 - **Affected Organization:** Wayne Enterprises
 - **Compromised Asset:** Web server hosting imreallynotbatman.com
 - **Attack Impact:** Website defacement with attacker's trademark
 - **Defacement Evidence:** 
-![[dcc528c218e8dda78504f55f58188575.png]]
+<img width="1085" height="591" alt="image" src="https://github.com/user-attachments/assets/79f9ec0b-9751-4d43-b5a8-f043ab8983b4" />
+
 
 ### Methodology
 #### Data Sources
@@ -40,7 +41,8 @@ Wayne Enterprises experienced a cyberattack resulting in the defacement of its p
 **Key Finding:**  
 IP `40.80.148.42` identified as primary attacker source through HTTP traffic analysis.
 
-![[Pasted image 20250618202509.png]]
+<img width="632" height="398" alt="image" src="https://github.com/user-attachments/assets/78c23e04-eff6-4fde-94b1-b7346f1869ea" />
+
 
 #### Suricata Alert Correlation
 **Query:**  
@@ -48,7 +50,8 @@ IP `40.80.148.42` identified as primary attacker source through HTTP traffic ana
 
 **Vulnerability Identification:**  
 ShellShock exploit attempt (CVE-2014-6271) detected  
-![[Screenshot 2025-06-18 203713.png]]
+<img width="632" height="398" alt="image" src="https://github.com/user-attachments/assets/1e25725a-297b-4486-8a81-bc1e4ac9c531" />
+
 
 #### CMS Identification
 **Query:**  
@@ -56,12 +59,13 @@ ShellShock exploit attempt (CVE-2014-6271) detected
 
 **Finding:**  
 Joomla CMS identified through URL patterns  
-![[Screenshot 2025-06-18 203453.png]]
+<img width="632" height="398" alt="image" src="https://github.com/user-attachments/assets/52b1d13e-8172-4e7b-b21d-9a6fe992f5f7" />
 
 #### Attacker Tools
 **Web Scanner Identification:**  
 Acunetix scanner detected via User-Agent analysis  
-![[Pasted image 20250618210822.png]]
+<img width="632" height="398" alt="image" src="https://github.com/user-attachments/assets/60ebd2ba-8cf8-4062-9f7f-6c043010bd68" />
+
 
 #### Infrastructure Details
 **Web Server IP:**  
@@ -100,7 +104,8 @@ This phase examines how the attacker exploited vulnerabilities to gain unauthori
 `index=botsv1 imreallynotbatman.com sourcetype=stream* | stats count(src_ip) as Requests by src_ip | sort - Requests`  
 
 - **Key Finding:** IP `23.22.63.114` generated a high volume of POST requests, suggesting scanning or brute-forcing.  
-![[Pasted image 20250618212202.png]]  
+<img width="632" height="398" alt="image" src="https://github.com/user-attachments/assets/7f6d4d9b-91b1-4fa3-908b-1bc6ff5c3053" />
+ 
 
 #### Brute-Force Attack on Joomla Admin Portal  
 **Targeted URI:** `/joomla/administrator/index.php`  
@@ -109,7 +114,8 @@ This phase examines how the attacker exploited vulnerabilities to gain unauthori
 
 - **Attack Pattern:** Repeated POST requests with `form_data` containing credentials.  
 - **Primary Username Targeted:** `admin`  
-![[9c47791d96dbadf8ab0d6a0adf1a9508.png]]  
+<img width="632" height="398" alt="image" src="https://github.com/user-attachments/assets/5c13c49c-f78e-44ad-ad94-2b8a6a6c6ce4" />
+  
 
 #### Credential Extraction via Regex  
 **Query:**  
@@ -117,7 +123,7 @@ This phase examines how the attacker exploited vulnerabilities to gain unauthori
 
 - **Results:** 413 total attempts, including **1 successful login** with password `batman` from IP `40.80.148.42`.  
 - **Brute-Force IP:** `23.22.63.114` (Python script detected in `http_user_agent`).  
-![[Pasted image 20250618212908.png]]  
+<img width="632" height="398" alt="image" src="https://github.com/user-attachments/assets/f2308321-b7de-420e-9ef5-d7150b8d34c7" />
 
 #### Solutions  
 1. **Brute-Forced URI:**  
@@ -153,12 +159,13 @@ The field `part_filename{}` reveals two files:
 - `3791.exe` (executable)  
 - `agent.php` (PHP script)  
 
-![[Pasted image 20250714121632.png]]  
+<img width="1417" height="800" alt="image" src="https://github.com/user-attachments/assets/57dcfeb2-4911-48b7-953b-c100944c10ef" />
 
 **Verification Query**:  
 `index=botsv1 sourcetype=stream:http dest_ip="192.168.250.70" "part_filename{}"="3791.exe"`  
 
-![[Pasted image 20250714121645.png]]  
+<img width="1417" height="800" alt="image" src="https://github.com/user-attachments/assets/3326fb90-3d2d-48fb-abdf-25ab6f2aca1c" />
+
 
 #### Execution Confirmation  
 **Query**:  
@@ -170,14 +177,16 @@ The field `part_filename{}` reveals two files:
 1. **MD5 Hash of 3791.exe**:  
    - Query: `index=botsv1 "3791.exe" sourcetype="XmlWinEventLog" EventCode=1`  
    - Result: `AAE3F5A29935E6ABCC2C2754D12A9AF0`  
-   ![[Screenshot 2025-06-19 101447.png]]  
+   <img width="962" height="338" alt="image" src="https://github.com/user-attachments/assets/62d26fe7-b1b0-468d-83d9-837d03ef2adc" />
+ 
 
 2. **User Who Executed 3791.exe**:  
    - `NT AUTHORITY\IUSR`  
 
 3. **VirusTotal Alternate Name**:  
    - `ab.exe`  
-   ![[Screenshot 2025-06-19 101527.png]]  
+  <img width="1811" height="577" alt="image" src="https://github.com/user-attachments/assets/b8d258e3-9edc-4792-affc-ae94924742ea" />
+  
 
 ---
 
@@ -190,7 +199,8 @@ The field `part_filename{}` reveals two files:
 
 **Outbound Traffic Check**:  
 `index=botsv1 src=192.168.250.70 sourcetype=suricata`  
-![[Pasted image 20250714123140.png]]  
+<img width="1012" height="639" alt="image" src="https://github.com/user-attachments/assets/016bee70-51c1-4b0c-acec-c3859efbe025" />
+
 
 **Suspicious Activity**:  
 - Server initiated outbound traffic to external IPs (e.g., `23.22.63.114`).  
@@ -198,7 +208,8 @@ The field `part_filename{}` reveals two files:
 
 **Query**:  
 `index=botsv1 url="/poisonivy-is-coming-for-you-batman.jpeg" dest_ip="192.168.250.70" | table _time src dest_ip http.hostname url`  
-![[Screenshot 2025-06-19 102122.png]]  
+<img width="1830" height="459" alt="image" src="https://github.com/user-attachments/assets/06f111e9-ba26-4d85-a2ca-664b1a2bb6f3" />
+
 
 #### Solutions:  
 1. **Defacement Filename**:  
@@ -207,7 +218,8 @@ The field `part_filename{}` reveals two files:
 2. **Fortigate SQL Injection Rule**:  
    - Query: `index=botsv1 sourcetype="fortigate_utm" src=40.80.148.42`  
    - Rule: `HTTP.URI.SQL.Injection`  
-   ![[Screenshot 2025-06-19 102509.png]]  
+   <img width="963" height="754" alt="image" src="https://github.com/user-attachments/assets/f8ea2d6d-9ca8-44aa-b495-b4ab39dfd5a6" />
+ 
 
 ---
 
@@ -216,11 +228,12 @@ The field `part_filename{}` reveals two files:
 #### Fortigate & HTTP Log Analysis  
 **Query**:  
 `index=botsv1 sourcetype=fortigate_utm "poisonivy-is-coming-for-you-batman.jpeg"`  
-![[Pasted image 20250714124120.png]]  
+<img width="1583" height="803" alt="image" src="https://github.com/user-attachments/assets/90f1c40f-d125-49bc-a5d5-f5ba7022958e" />
+
 
 **Verification via HTTP Logs**:  
 `index=botsv1 sourcetype=stream:http dest_ip=23.22.63.114 "poisonivy-is-coming-for-you-batman.jpeg" src_ip=192.168.250.70`  
-![[Pasted image 20250714124206.png]]  
+<img width="1419" height="985" alt="image" src="https://github.com/user-attachments/assets/080416bd-9368-4dc1-af25-3bea67b6dc5d" />
 
 #### Solution:  
 1. **Malicious FQDN**:  
@@ -237,19 +250,21 @@ The weaponization phase reveals how attackers prepared malicious infrastructure 
 #### Domain Intelligence (Robtex)
 - **Primary Attacker Domain:** `www.po1s0n1vy.com`
 - **Suspicious Subdomains:** Multiple domains mimicking Wayne Enterprises infrastructure  
-![[Pasted image 20250714125737.png]]
+<img width="1115" height="410" alt="image" src="https://github.com/user-attachments/assets/0e56748a-ec90-4258-8172-df939163cb52" />
+
 
 #### Threat Actor Infrastructure
 - **IP Address:** 23.22.63.114 (hosting attacker-controlled domains)  
-![[Pasted image 20250714125813.png]]
+<img width="1138" height="399" alt="image" src="https://github.com/user-attachments/assets/01560261-879f-408f-befd-d79b57d61dfc" />
+
 
 #### VirusTotal Analysis
 - **APT Group Association:** Confirmed linkage to Poison Ivy infrastructure  
-![[Pasted image 20250714125929.png]]
+<img width="1178" height="664" alt="image" src="https://github.com/user-attachments/assets/3fa64611-b23c-422e-a985-e0936f86f87f" />
 
 #### Attacker Attribution
 - **Associated Email:** `lillian.rose@po1s0n1vy.com` (via AlienVault OTX)  
-![[Pasted image 20250714130033.png]]
+<img width="1441" height="801" alt="image" src="https://github.com/user-attachments/assets/c0d09ffd-dfa5-42ff-9059-e127e50ef2b4" />
 
 
 #### Solutions
@@ -269,18 +284,21 @@ Attackers distributed malware through compromised infrastructure, leveraging mul
 
 #### ThreatMiner Findings
 - **Malware Hash:** `c99131e0169171935c5ac32615ed6261`  
-![[Pasted image 20250714130320.png]]
+<img width="917" height="457" alt="image" src="https://github.com/user-attachments/assets/23ed30ad-e0b0-4b20-8b9f-d55189784db3" />
+
 
 #### VirusTotal Confirmation
 - **Malware Filename:** `MirandaTateScreensaver.scr.exe`  
-![[Pasted image 20250714130520.png]]
+<img width="1812" height="315" alt="image" src="https://github.com/user-attachments/assets/0bbe7bb0-7799-41df-a579-9d4f5e3b97ec" />
+
 
 #### Hybrid-Analysis Insights
 - **Key Indicators:**
   - C2 communication patterns
   - MITRE ATT&CK techniques mapped
   - Suspicious DLL imports  
-![[Pasted image 20250714130622.png]]
+<img width="1151" height="777" alt="image" src="https://github.com/user-attachments/assets/8526c547-a6b9-4c46-9b20-c736f2566b1c" />
+
 
 #### Solutions
 1. **Malware hash value:**  
