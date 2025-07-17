@@ -8,7 +8,8 @@ obsidian://open?vault=Obsidian%20Vault&file=CY%2FImages%2FPasted%20image%2020250
 - **Compromised Asset:** Web server hosting imreallynotbatman.com
 - **Attack Impact:** Website defacement with attacker's trademark
 - **Defacement Evidence:** 
-<img width="1085" height="591" alt="image" src="https://github.com/user-attachments/assets/79f9ec0b-9751-4d43-b5a8-f043ab8983b4" />
+<img width="912" height="511" alt="image" src="https://github.com/user-attachments/assets/53c1260c-d937-4ba1-867d-2d04d68c0969" />
+
 
 
 ### Methodology
@@ -59,12 +60,14 @@ ShellShock exploit attempt (CVE-2014-6271) detected
 
 **Finding:**  
 Joomla CMS identified through URL patterns  
-<img width="632" height="398" alt="image" src="https://github.com/user-attachments/assets/52b1d13e-8172-4e7b-b21d-9a6fe992f5f7" />
+<img width="1214" height="929" alt="image" src="https://github.com/user-attachments/assets/1e907f31-1ccb-45af-ab41-d379acbe1998" />
+
 
 #### Attacker Tools
 **Web Scanner Identification:**  
 Acunetix scanner detected via User-Agent analysis  
-<img width="632" height="398" alt="image" src="https://github.com/user-attachments/assets/60ebd2ba-8cf8-4062-9f7f-6c043010bd68" />
+<img width="1053" height="267" alt="image" src="https://github.com/user-attachments/assets/7fbda077-1a89-42c1-b675-599fa591de36" />
+
 
 
 #### Infrastructure Details
@@ -104,7 +107,8 @@ This phase examines how the attacker exploited vulnerabilities to gain unauthori
 `index=botsv1 imreallynotbatman.com sourcetype=stream* | stats count(src_ip) as Requests by src_ip | sort - Requests`  
 
 - **Key Finding:** IP `23.22.63.114` generated a high volume of POST requests, suggesting scanning or brute-forcing.  
-<img width="632" height="398" alt="image" src="https://github.com/user-attachments/assets/7f6d4d9b-91b1-4fa3-908b-1bc6ff5c3053" />
+<img width="1209" height="187" alt="image" src="https://github.com/user-attachments/assets/6e563268-2c46-4d95-907c-621dac1d5c9b" />
+
  
 
 #### Brute-Force Attack on Joomla Admin Portal  
@@ -114,7 +118,8 @@ This phase examines how the attacker exploited vulnerabilities to gain unauthori
 
 - **Attack Pattern:** Repeated POST requests with `form_data` containing credentials.  
 - **Primary Username Targeted:** `admin`  
-<img width="632" height="398" alt="image" src="https://github.com/user-attachments/assets/5c13c49c-f78e-44ad-ad94-2b8a6a6c6ce4" />
+<img width="1829" height="767" alt="image" src="https://github.com/user-attachments/assets/3c0857ec-85e5-40f0-81c2-48e92ef96306" />
+
   
 
 #### Credential Extraction via Regex  
@@ -123,7 +128,8 @@ This phase examines how the attacker exploited vulnerabilities to gain unauthori
 
 - **Results:** 413 total attempts, including **1 successful login** with password `batman` from IP `40.80.148.42`.  
 - **Brute-Force IP:** `23.22.63.114` (Python script detected in `http_user_agent`).  
-<img width="632" height="398" alt="image" src="https://github.com/user-attachments/assets/f2308321-b7de-420e-9ef5-d7150b8d34c7" />
+<img width="1834" height="890" alt="image" src="https://github.com/user-attachments/assets/f27f9d8c-e2f0-4754-9430-d07dd94ec878" />
+
 
 #### Solutions  
 1. **Brute-Forced URI:**  
@@ -164,7 +170,8 @@ The field `part_filename{}` reveals two files:
 **Verification Query**:  
 `index=botsv1 sourcetype=stream:http dest_ip="192.168.250.70" "part_filename{}"="3791.exe"`  
 
-<img width="1417" height="800" alt="image" src="https://github.com/user-attachments/assets/3326fb90-3d2d-48fb-abdf-25ab6f2aca1c" />
+<img width="1834" height="890" alt="image" src="https://github.com/user-attachments/assets/779b17ef-c8d5-4cce-8b94-61ae9b904d9b" />
+
 
 
 #### Execution Confirmation  
